@@ -1,0 +1,32 @@
+# Copyright 2020-2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Isolated
+1BC56::[u1BC56.romanian_u.180p0@270,0|dupl.Dot.rel1@270,150|_@465,0]
+
+# Initial
+1BC56 1BC04::[u1BC56.romanian_u.300n120@270,313|dupl.Dot.rel1@400,500|u1BC04.f@400,0|_@808,0]
+1BC56 1BC05::[u1BC56.romanian_u.240n60@278,499|dupl.Dot.rel1@408,500|u1BC05.k@408,0|_@548,0]
+
+# Final
+1BC04 1BC56::[u1BC04.f@120,0|u1BC56.romanian_u.300p120@408,-75|dupl.Dot.rel1@538,75|_@808,0]
+1BC05 1BC56::[u1BC05.k@428,0|u1BC56.romanian_u.240p60@140,-225|dupl.Dot.rel1@270,-75|_@548,0]
+
+# Medial
+1BC04 1BC56 1BC04::[u1BC04.f@120,0|u1BC44.o.120n120@408,-75|dupl.Dot.rel1@538,75|u1BC04.f@408,-500|_@816,0]
+1BC03 1BC56 1BC04::[u1BC03.t@120,425|u1BC44.o.0p300@620,425|dupl.Dot.rel1@620,575|u1BC04.f@490,0|_@898,0]
+1BC04 1BC56 1BC03::[u1BC04.f@120,0|u1BC44.o.300n0@408,-225|dupl.Dot.rel1@278,-75|u1BC03.t@278,75|_@898,0]
+1BC05 1BC56 1BC04::[u1BC05.k@688,0|u1BC44.o.240n300@400,-75|dupl.Dot.rel1@270,75|u1BC04.f@400,-350|_@808,0]
+1BC04 1BC56 1BC05::[u1BC04.f@120,0|u1BC44.o.300p240@408,-75|dupl.Dot.rel1@538,75|u1BC05.k@408,-350|_@808,0]
+1BC05 1BC56 1BC05::[u1BC05.k@696,0|u1BC44.o.60n60@408,-225|dupl.Dot.rel1@538,-75|u1BC05.k@408,-500|_@816,0]

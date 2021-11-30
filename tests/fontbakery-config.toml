@@ -1,0 +1,26 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+exclude_checks = [
+    "com.google.fonts/check/family/win_ascent_and_descent",
+    "com.google.fonts/check/gpos_kerning_info",
+]
+
+[overrides."com.google.fonts/check/family/vertical_metrics"]
+ascent-mismatch = "WARN"
+sTypoAscender-mismatch = "WARN"
+usWinAscent-mismatch = "WARN"
+
+[overrides."com.google.fonts/check/valid_glyphnames"]
+legacy-long-names = "PASS"

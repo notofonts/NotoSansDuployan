@@ -1,0 +1,20 @@
+# Copyright 2019 David Corbett
+# Copyright 2020-2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+1BC9D::[uni25CC.dotted_circle@0,0|u1BC9D.dtls@686,0|_@1814,0]
+1BC02 1BC9D::[u1BC02_u1BC9D.P@145,0|_@290,0]
+1BC02 1BC9D 1BC9D::[u1BC02_u1BC9D.P@145,0|u1BC9D.dtls@290,0|_@1418,0]
+1BC03 0304 1BC9D::[u1BC03.t@120,0|uni0304.macron@320,245|uni25CC.dotted_circle@740,0|u1BC9D.dtls@1426,0|_@2554,0]
+1BC1A 1BC9D 1BC9E::[u1BC1A_u1BC9D.N@145,0|u1BC9E.double@333,385|_@678,0]
