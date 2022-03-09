@@ -13,14 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Test
+name: Main workflow
 on: push
 env:
   FONTFORGE_COMMIT: aa062f4cbd1db21e27b2620f16993ebe4c540ab6
   HARFBUZZ_VERSION: 3.1.0
   PYTHON_VERSION: 3.9
 jobs:
-  test:
+  main:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -51,6 +51,7 @@ jobs:
       - name: Install FontForge
         if: steps.cache-fontforge.outputs.cache-hit != 'true'
         run: |
+          sudo apt-get update
           sudo apt-get -qy --no-install-recommends install \
             build-essential \
             cmake \
@@ -100,28 +101,60 @@ jobs:
       - name: Add HarfBuzz to path
         if: matrix.skip-check == ''
         run: echo "$PWD/.hb/harfbuzz-${{ env.HARFBUZZ_VERSION }}/util" >>"$GITHUB_PATH"
+      - name: Prepare newest requirements
+        if: matrix.requirements == 'newest'
+        run: |
+          cp dev-requirements.in dev-requirements.txt
+          cp requirements.in requirements.txt
       - name: Install dev requirements
         if: matrix.skip-check == ''
-        run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
+        run: pip install ${{ matrix.requirements != 'newest' && '--no-deps' || '' }} --upgrade --upgrade-strategy eager -r dev-requirements.txt
       - name: Prepare oldest requirements
         if: matrix.requirements == 'oldest'
         run: |
           ./get-old-requirements.py --input requirements.in --output requirements.txt
-      - name: Prepare newest requirements
-        if: matrix.requirements == 'newest'
-        run: cp requirements.in requirements.txt
+      - name: Make a virtual environment for building
+        run: python -m venv build-venv
       - name: Install requirements
-        run: pip install --upgrade --upgrade-strategy eager -r requirements.txt
+        run: |
+          . build-venv/bin/activate
+          pip install ${{ matrix.requirements == 'frozen' && '--no-deps' || '' }} --upgrade --upgrade-strategy eager -r requirements.txt
       - name: Build
-        run: make -B -j "NOTO=${{ matrix.noto }}"
+        run: |
+          . build-venv/bin/activate
+          make -B -j "NOTO=${{ matrix.noto }}"
       - name: Test
         if: matrix.skip-check == ''
         run: make -j "NOTO=${{ matrix.noto }}" check
+      - name: Determine whether to push the fonts or upload them
+        id: push-or-upload
+        run: |
+          is_noto=${{ matrix.noto != '' }}
+          job_will_push=${{ github.ref_name == github.event.repository.default_branch && contains(github.event.repository.name, 'Noto') }}
+          if [ $job_will_push = true ]
+          then
+            echo ::set-output name=push::$is_noto
+          else
+            if [ $is_noto = true ]
+            then
+              upload_name=fonts-noto
+            elif [ ${{ matrix.skip-check != '' }} = true ]
+            then
+              upload_name=fonts
+            fi
+            echo ::set-output name=upload-name::$upload_name
+          fi
       - name: Commit and push
-        if: matrix.noto != '' && github.ref_name == github.event.repository.default_branch && contains(github.event.repository.name, 'Noto')
+        if: steps.push-or-upload.outputs.push == 'true'
         run: |
           git config --local user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git config --local user.name 'github-actions[bot]'
           git add -f fonts
           git commit -m 'Automatically build the fonts'
           git push
+      - name: Upload build artifacts
+        if: steps.push-or-upload.outputs.upload-name
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.push-or-upload.outputs.upload-name }}
+          path: fonts

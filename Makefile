@@ -1,5 +1,5 @@
 # Copyright 2018-2019 David Corbett
-# Copyright 2020-2021 Google LLC
+# Copyright 2020-2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 STYLES = Regular Bold
 ifdef NOTO
     FONT_FAMILY_NAME = NotoSansDuployan
-    VERSION = 3.000
+    VERSION = 3.001
     RELEASE = --release
     CHECK_ARGS = --incomplete
     override NOTO = --noto
@@ -59,8 +59,12 @@ $(addprefix check-,$(FONTS)): check-%: %
 $(addprefix fontbakery-,$(SUFFIXES)): fontbakery-%: %
 	fontbakery check-notofonts --auto-jobs --configuration tests/fontbakery-config.toml $(filter %.$*,$(FONTS))
 
+.PHONY: mypy
+mypy:
+	mypy --ignore-missing-imports --no-implicit-optional --show-error-codes --warn-redundant-casts --warn-unused-ignores get-old-requirements.py sources tests
+
 .PHONY: check
-check: $(addprefix check-,$(FONTS)) $(addprefix fontbakery-,$(SUFFIXES))
+check: $(addprefix check-,$(FONTS)) $(addprefix fontbakery-,$(SUFFIXES)) mypy
 
 .PHONY: hb-shape
 hb-shape:
@@ -83,6 +87,6 @@ endif
 
 .PHONY: $(patsubst %.in,%.txt,$(wildcard *requirements.in))
 $(patsubst %.in,%.txt,$(wildcard *requirements.in)): %requirements.txt: %requirements.in
-	pip-compile --allow-unsafe --generate-hashes --no-emit-index-url --no-emit-trusted-host --quiet --upgrade $<
+	pip-compile --allow-unsafe --no-emit-index-url --no-emit-trusted-host --quiet --upgrade $<
 	printf '%s\n%s\n' "$$(sed -n '1,/^$$/p' $<)" "$$(cat $@)" >$@
-	git diff $@
+	-git --no-pager diff $@
