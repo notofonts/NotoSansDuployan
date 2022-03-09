@@ -1,4 +1,20 @@
-# NotoSansDuployan docs README
-This is the directory where NotoSansDuployan specific documentation or design artifacts should go.
+<!--
+Copyright 2022 Google LLC
 
-If you want more general information please see [How to Add a New Script to Noto](https://github.com/notofonts/noto-docs/blob/master/FONT_CONTRIBUTION.md) or if you already are working on a new Noto script that was approved please see [Noto Weight & Width Naming & Numbering and Style Naming Specification](https://github.com/notofonts/noto-docs/blob/master/Noto-Weight-Width-Style-Specification.md).
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+# Noto Sans Duployan
+
+* [User documentation](user-documentation.md)
+* [Developer documentation](developer-documentation.md)
